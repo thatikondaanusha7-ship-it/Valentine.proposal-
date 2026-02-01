@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spam Link 💘</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fdecef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.card {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  position: relative;
+}
+
+h1 {
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+button {
+  font-size: 18px;
+  padding: 10px 26px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#yesBtn {
+  background: #ff4d6d;
+  color: white;
+}
+
+#noBtn {
+  background: #d6d6d6;
+  position: absolute;
+}
+
+.sub {
+  font-size: 12px;
+  color: #777;
+  margin-top: 8px;
+}
+
+/* Celebration */
+#celebrate {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #fdecef;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#celebrate h1 {
+  font-size: 34px;
+  margin-bottom: 20px;
+}
+
+#floatingImg {
+  width: 260px;
+  position: absolute;
+  animation: float 5s infinite alternate ease-in-out;
+}
+
+@keyframes float {
+  from {
+    top: 10%;
+    left: 10%;
+    transform: rotate(0deg);
+  }
+  to {
+    top: 70%;
+    left: 70%;
+    transform: rotate(15deg);
+  }
+}
+
+.heart {
+  position: absolute;
+  bottom: -40px;
+  font-size: 20px;
+  animation: rise 6s linear forwards;
+}
+
+@keyframes rise {
+  from { transform: translateY(0); opacity: 0; }
+  to { transform: translateY(-120vh); opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1>jabar will you be my valentine? 💖</h1>
+  <button id="yesBtn">Yes</button>
+  <button id="noBtn">No</button>
+  <div class="sub">No seems a bit shy 😇</div>
+</div>
+
+<div id="celebrate">
+  <h1>YAYYYY 🎉💘</h1>
+  <img id="floatingImg"
+    src="https://i.imgur.com/8Qf5FQk.png"
+    alt="celebrate">
+</div>
+
+<script>
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const card = document.getElementById("card");
+const celebrate = document.getElementById("celebrate");
+
+// Position NO initially
+moveNo();
+
+// No button chaos
+function moveNo() {
+  const x = Math.random() * (window.innerWidth - 120);
+  const y = Math.random() * (window.innerHeight - 80);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
+
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("click", moveNo);
+
+// YES grows after 2 sec
+setTimeout(() => {
+  yesBtn.style.transform = "scale(1.5)";
+}, 2000);
+
+// YES follows cursor/finger slightly
+document.addEventListener("mousemove", e => {
+  yesBtn.style.transform =
+    "scale(1.5) translate(" + (e.clientX/80) + "px," + (e.clientY/80) + "px)";
+});
+
+// YES click
+yesBtn.addEventListener("click", startCelebration);
+
+// Auto celebration after 40 sec
+setTimeout(startCelebration, 40000);
+
+function startCelebration() {
+  card.style.display = "none";
+  celebrate.style.display = "flex";
+
+  const heartInterval = setInterval(createHeart, 300);
+
+  setTimeout(() => {
+    clearInterval(heartInterval);
+    celebrate.innerHTML = "<h1>💖 Mission Accomplished 💖</h1>";
+  }, 60000);
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (16 + Math.random() * 14) + "px";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 6000);
+}
+</script>
+
+</body>
+</html>
