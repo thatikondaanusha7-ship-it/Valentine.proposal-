@@ -1,0 +1,40 @@
+    <script>
+        const startTime = Date.now();
+        let yesScale = 1;
+
+        function handleNo() {
+            const elapsed = (Date.now() - startTime) / 1000;
+
+            // Wait 10 seconds before moving
+            if (elapsed > 10 && elapsed < 60) {
+                const noBtn = document.getElementById('noBtn');
+                const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+                const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = x + 'px';
+                noBtn.style.top = y + 'px';
+
+                // Make Yes button grow up to 2x size
+                if (yesScale < 2) {
+                    yesScale += 0.15;
+                    document.getElementById('yesBtn').style.transform = `scale(${yesScale})`;
+                }
+            }
+
+            // Disappear after 1 minute and center Yes
+            if (elapsed >= 60) {
+                document.getElementById('noBtn').style.display = 'none';
+                const yesBtn = document.getElementById('yesBtn');
+                yesBtn.style.transform = 'scale(2)';
+                yesBtn.style.position = 'relative';
+                yesBtn.style.margin = '0 auto';
+                document.getElementById('headerText').innerText = "Now you have to say Yes! 😉";
+            }
+        }
+
+        function celebrate() {
+            document.getElementById('question-page').classList.add('hidden');
+            document.getElementById('success-page').classList.remove('hidden');
+            document.body.style.backgroundColor = "#ff4d6d";
+        }
+    </script>
